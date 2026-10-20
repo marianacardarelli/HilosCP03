@@ -1,0 +1,14 @@
+¿Se recogen todos los valores?¿Qué ocurre?
+En el primer caso no se recogen todos los valores.
+No llegan a ser mostrados todos los valores ya que las hebras no están coordinadas y puede
+que la HebraGet muestre el valor cuando la HebraSet ya haya avanzado más de un valor; o
+puede que la HebraGet muestre varias veces el mismo valor antes de que la HebraSet
+cambie el valor de la VariableCompartida.
+Hay que conseguir que la HebraSet cambie el valor de la variable cuando la HebraGet ya haya
+recogido el valor, no antes.
+Este problema se relaciona con la Interferencia entre operaciones de lectura/escritura. Estas
+operaciones sobre un dato compartido interfieren entre sí cuando una hebra actúa sobre un
+valor que la otra ya ha dejado obsoleto.
+
+Para la Solución proponemos proteger la zona crítica en este caso el método set en la clase
+HebraSet, usando sincronyzed tanto el el método getter como en el setter de la clase VariableCompartida.
